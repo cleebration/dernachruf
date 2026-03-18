@@ -574,7 +574,7 @@ export default function App() {
         {/* ── ARCHIV ─────────────────────────────────────────── */}
         {view === "archive" && (
           <>
-            <div className="section-title">Das Archiv der Verschwundenen Dinge</div>
+            <div className="section-title">Das Archiv der verschwundenen Dinge</div>
             <div className="section-sub">{posts.length} Einträge · Geordnet nach Lebensbereich · ~65 Jahre Rückblick</div>
 
             {categories.map((cat, i) => {
