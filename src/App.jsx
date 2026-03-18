@@ -428,7 +428,7 @@ export default function App() {
 
       {/* MASTHEAD */}
       <div className="masthead">
-        <div className="site-title">DerNachruf</div>
+        <div className="site-title">Der Nachruf</div>
         <div className="site-motto">
           <span className="ornament">✦</span>
           Ein Archiv der verschwundenen Dinge
@@ -484,7 +484,7 @@ export default function App() {
             <div className="search-wrap">
               <input
                 className="search-input"
-                placeholder="Suche im Archiv der Verschwundenen …"
+                placeholder="Suche im Archiv der Verschwundenen Dinge"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -574,7 +574,7 @@ export default function App() {
         {/* ── ARCHIV ─────────────────────────────────────────── */}
         {view === "archive" && (
           <>
-            <div className="section-title">Das Archiv der Verschwundenen</div>
+            <div className="section-title">Das Archiv der Verschwundenen Dinge</div>
             <div className="section-sub">{posts.length} Einträge · Geordnet nach Lebensbereich · ~65 Jahre Rückblick</div>
 
             {categories.map((cat, i) => {
@@ -625,11 +625,11 @@ export default function App() {
               </a>
             </div>
 
-            <div className="section-title">Über DerNachruf</div>
+            <div className="section-title">Über Der Nachruf</div>
             <div className="section-sub">Was hier geschieht und warum</div>
             <div className="about-block">
               <p style={{ marginBottom: 18 }}>
-                DerNachruf ist ein Archiv der verschwundenen Dinge. Kein Museum – dafür sind wir zu subjektiv. Kein Geschichtsbuch – dafür sind wir zu nostalgisch. Eher eine Sammlung kleiner Trauerfeiern für Objekte, Berufe, Gewohnheiten und Gesten, die einmal selbstverständlich waren und heute nicht mehr existieren.
+                Der Nachruf ist ein Archiv der verschwundenen Dinge. Kein Museum – dafür sind wir zu subjektiv. Kein Geschichtsbuch – dafür sind wir zu nostalgisch. Eher eine Sammlung kleiner Trauerfeiern für Objekte, Berufe, Gewohnheiten und Gesten, die einmal selbstverständlich waren und heute nicht mehr existieren.
               </p>
               <p style={{ marginBottom: 18 }}>
                 Wir gehen etwa 65 Jahre zurück – in jene Jahrzehnte, in denen das Alltagsleben noch ganz anders roch, klang und sich anfühlte. Die Telefonzelle. Der Scherenschleifer. Die Schiefertafel. Der Busschaffner. Sie alle sind gegangen, ohne dass jemand einen Nachruf geschrieben hätte.
