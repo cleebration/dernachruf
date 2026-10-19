@@ -396,7 +396,7 @@ const STYLES = `
 `;
 
 export default function App() {
-  const [view, setView] = useState("posts");
+  const [view, setView] = useState(() => (typeof window !== "undefined" && window.location.hash === "#newsletter" ? "newsletter" : "posts"));
   const [activePost, setActivePost] = useState(null);
   const [expandedCat, setExpandedCat] = useState(null);
   const [filterCat, setFilterCat] = useState("alle");
@@ -444,6 +444,7 @@ export default function App() {
           { key: "posts", label: "Nachrufe" },
           { key: "archive", label: "Das Archiv" },
           { key: "about", label: "Über uns" },
+          { key: "newsletter", label: "Newsletter" },
         ].map((n) => (
           <button
             key={n.key}
@@ -675,6 +676,20 @@ export default function App() {
               </div>
             </div>
           </div>
+        )}
+
+        {/* ── NEWSLETTER ─────────────────────────────────────────
+            Zentraler Baustein newsletter-hub (seit 19.10.2026): Formular + Anmeldung von
+            newsletter.cleebration.com (Script in index.html); Liste/Texte in
+            cleebration-web/newsletter-hub/worker/sites.config.mjs (Schlüssel "dernachruf"). */}
+        {view === "newsletter" && (
+          <>
+            <div className="section-title">Newsletter</div>
+            <div className="section-sub">Nachricht, wenn wieder etwas verschwunden ist</div>
+            <div style={{ maxWidth: 520, margin: "32px auto 0" }}>
+              <newsletter-signup site="dernachruf" heading=""></newsletter-signup>
+            </div>
+          </>
         )}
 
       </div>
