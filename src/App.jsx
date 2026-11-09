@@ -718,6 +718,11 @@ export default function App() {
             ✉ media@cleebration.com
           </a>
         </div>
+        <div style={{ marginBottom: 16 }}>
+          <a href="https://cleebration.com/musik/seit-vierzig-jahren#der-nachruf" className="lied-zur-seite" style={{ color: "#c8a97e", fontSize: 13, textDecoration: "none", letterSpacing: 1, fontStyle: "italic" }}>
+            ♪ Das Lied zur Seite: „Der Nachruf“ – auf der CD „Seit vierzig Jahren“
+          </a>
+        </div>
         <div style={{ fontSize: 10, color: "#7a6a4a", letterSpacing: 2, textTransform: "uppercase" }}>
           © {new Date().getFullYear()} DerNachruf · Alle Rechte vorbehalten
         </div>
