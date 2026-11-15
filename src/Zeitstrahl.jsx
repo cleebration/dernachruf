@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import { categories, posts } from "./data.js";
 import { lebensdaten, STATUS_TEXT, BELEG_TEXT } from "./lebensdaten.js";
+import Erbfolge from "./Erbfolge.jsx";
+import { kanten } from "./abhaengigkeiten.js";
 
 const JETZT = new Date().getFullYear();
 const ENDE = JETZT + 5;
@@ -56,6 +58,9 @@ const CSS = `
   .zs-lesen { background: #c8a97e; color: #2a1f14; border: none; padding: 6px 14px; font-family: 'IM Fell English', serif; font-size: 14px; cursor: pointer; }
   .zs-hinweis { max-width: 760px; margin: 22px auto 0; font-family: 'IM Fell English', serif; font-size: 12px; color: #7a6a4a; line-height: 1.6; text-align: center; }
 
+  .zs-tabs { display: flex; justify-content: center; gap: 0; margin: 0 auto 26px; }
+  .zs-tabs button { font-family: 'IM Fell English', serif; font-size: 15px; letter-spacing: 1px; padding: 8px 18px; background: #e8dcc8; border: 1px solid #c8b89a; color: #3a2a18; cursor: pointer; }
+  .zs-tabs button.aktiv { background: #2a1f14; color: #f0e8d8; border-color: #c8a97e; }
   .zs-wrap { --zs-label: 190px; }
   @media (max-width: 640px) {
     .zs-wrap { --zs-label: 0px; }
@@ -76,7 +81,17 @@ function leseGeburtsjahr() {
   } catch { return ""; }
 }
 
-export default function Zeitstrahl({ onOpen }) {
+function leseDomino() {
+  try {
+    const m = window.location.hash.match(/domino=([\w-]+)/);
+    return m ? m[1] : null;
+  } catch { return null; }
+}
+
+export default function Zeitstrahl({ onOpen, dominoStart }) {
+  const startDomino = dominoStart || leseDomino();
+  const [ansicht, setAnsicht] = useState(startDomino ? "erbfolge" : "balken");
+  const [domino, setDomino] = useState(startDomino);
   const [von, setVon] = useState(1900);
   const [sortierung, setSortierung] = useState("tod");
   const [kat, setKat] = useState("alle");
@@ -116,6 +131,17 @@ export default function Zeitstrahl({ onOpen }) {
   const ticks = [];
   for (let j = Math.ceil(von / 25) * 25; j <= ENDE; j += 25) ticks.push(j);
 
+  const wechsle = (a) => {
+    setAnsicht(a);
+    try { window.history.replaceState(null, "", a === "erbfolge" ? "#zeitstrahl&domino=" + (domino || "auto") : "#zeitstrahl"); } catch { /* egal */ }
+  };
+  const zeigeDomino = (id) => {
+    let w = id; const seen = new Set();
+    while (!seen.has(w)) { seen.add(w); const e = kanten.find(([, z]) => z === w); if (!e) break; w = e[0]; }
+    setDomino(w); setAnsicht("erbfolge"); window.scrollTo(0, 0);
+    try { window.history.replaceState(null, "", "#zeitstrahl&domino=" + w); } catch { /* egal */ }
+  };
+
   const teilen = () => {
     try {
       const url = `${window.location.origin}/#zeitstrahl&geboren=${gJahr}`;
@@ -134,6 +160,17 @@ export default function Zeitstrahl({ onOpen }) {
   return (
     <div className="zs-wrap">
       <style>{CSS}</style>
+      <div className="zs-tabs">
+        <button className={ansicht === "balken" ? "aktiv" : ""} onClick={() => wechsle("balken")}>Lebensbalken</button>
+        <button className={ansicht === "erbfolge" ? "aktiv" : ""} onClick={() => wechsle("erbfolge")}>Erbfolge & Domino</button>
+      </div>
+      {ansicht === "erbfolge" ? (
+        <>
+          <div className="section-title">Die Erbfolge</div>
+          <div className="section-sub">Wer wen verdrängte – und wer mit ins Grab ging</div>
+          <Erbfolge key={domino || "e"} onOpen={onOpen} start={domino} />
+        </>
+      ) : (<>
       <div className="section-title">Der Lebensbalken</div>
       <div className="section-sub">Wann sie kamen, wann sie blühten, wann sie gingen</div>
       <div className="zs-intro">
@@ -247,6 +284,7 @@ export default function Zeitstrahl({ onOpen }) {
                   <div className="zs-schein-notiz">{d.notiz}</div>
                   <div className="zs-schein-fuss">
                     <button className="zs-lesen" onClick={() => onOpen(post)}>Nachruf lesen →</button>
+                    {kanten.some(([v, z]) => v === post.id || z === post.id) && <button className="zs-lesen" style={{ background: "none", color: "#c8a97e", border: "1px solid #c8a97e" }} onClick={() => zeigeDomino(post.id)}>Erbfolge als Domino →</button>}
                     <span>Jahre: {BELEG_TEXT[d.beleg]}</span>
                     {d.quelle && <a href={d.quelle.url} target="_blank" rel="noopener noreferrer">Quelle: {d.quelle.titel}</a>}
                   </div>
@@ -261,6 +299,7 @@ export default function Zeitstrahl({ onOpen }) {
         Stand der Recherche: 15.11.2026. Schwerpunkt Österreich. Gestrichelte Balken sind Schätzungen von DerNachruf und nicht bestätigt –
         wer ein Todesjahr genauer kennt: <a href="mailto:media@cleebration.com" style={{ color: "#8a6a3a" }}>media@cleebration.com</a>.
       </div>
+      </>)}
     </div>
   );
 }

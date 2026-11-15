@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { categories, posts } from "./data.js";
 import Zeitstrahl from "./Zeitstrahl.jsx";
+import { ErbfolgeBlock } from "./Erbfolge.jsx";
 
 const STYLES = `
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -404,6 +405,7 @@ export default function App() {
     return "posts";
   });
   const [activePost, setActivePost] = useState(null);
+  const [erbStart, setErbStart] = useState(null);
   const [expandedCat, setExpandedCat] = useState(null);
   const [filterCat, setFilterCat] = useState("alle");
   const [search, setSearch] = useState("");
@@ -458,7 +460,7 @@ export default function App() {
             key={n.key}
             className={`nav-btn ${view === n.key && !activePost ? "active" : view === n.key && activePost && n.key === "posts" ? "active" : ""}`}
             onClick={() => {
-              setView(n.key); setActivePost(null);
+              setView(n.key); setActivePost(null); setErbStart(null);
               try { if (n.key === "zeitstrahl") window.history.replaceState(null, "", "#zeitstrahl"); else if (window.location.hash.startsWith("#zeitstrahl")) window.history.replaceState(null, "", window.location.pathname); } catch { /* egal */ }
             }}
           >
@@ -557,6 +559,8 @@ export default function App() {
                     <p key={i} className="post-body-para">{para}</p>
                   ))}
                 </div>
+                <ErbfolgeBlock postId={activePost.id} onOpen={openPost}
+                  onErbfolge={(id) => { setErbStart(id); setActivePost(null); setView("zeitstrahl"); try { window.history.replaceState(null, "", `#zeitstrahl&domino=${id}`); } catch { /* egal */ } }} />
                 <div className="post-closing">
                   Wir erinnern. Wir trauern. Wir vergessen nicht.<br />
                   <span style={{ fontSize: "12px", letterSpacing: "2px" }}>— DerNachruf</span>
@@ -622,7 +626,7 @@ export default function App() {
         )}
 
         {/* ── ZEITSTRAHL ─────────────────────────────────────── */}
-        {view === "zeitstrahl" && <Zeitstrahl onOpen={openPost} />}
+        {view === "zeitstrahl" && <Zeitstrahl key={erbStart || "z"} onOpen={openPost} dominoStart={erbStart} />}
 
         {/* ── ABOUT ──────────────────────────────────────────── */}
         {view === "about" && (
