@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { categories, posts } from "./data.js";
+import Zeitstrahl from "./Zeitstrahl.jsx";
 
 const STYLES = `
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -396,7 +397,12 @@ const STYLES = `
 `;
 
 export default function App() {
-  const [view, setView] = useState(() => (typeof window !== "undefined" && window.location.hash === "#newsletter" ? "newsletter" : "posts"));
+  const [view, setView] = useState(() => {
+    if (typeof window === "undefined") return "posts";
+    if (window.location.hash === "#newsletter") return "newsletter";
+    if (window.location.hash.startsWith("#zeitstrahl")) return "zeitstrahl";
+    return "posts";
+  });
   const [activePost, setActivePost] = useState(null);
   const [expandedCat, setExpandedCat] = useState(null);
   const [filterCat, setFilterCat] = useState("alle");
@@ -419,6 +425,7 @@ export default function App() {
   });
 
   const openPost = (post) => {
+    try { if (window.location.hash.startsWith("#zeitstrahl")) window.history.replaceState(null, "", window.location.pathname); } catch { /* egal */ }
     setActivePost(post);
     setView("posts");
   };
@@ -443,13 +450,17 @@ export default function App() {
         {[
           { key: "posts", label: "Nachrufe" },
           { key: "archive", label: "Das Archiv" },
+          { key: "zeitstrahl", label: "Zeitstrahl" },
           { key: "about", label: "Über uns" },
           { key: "newsletter", label: "Newsletter" },
         ].map((n) => (
           <button
             key={n.key}
             className={`nav-btn ${view === n.key && !activePost ? "active" : view === n.key && activePost && n.key === "posts" ? "active" : ""}`}
-            onClick={() => { setView(n.key); setActivePost(null); }}
+            onClick={() => {
+              setView(n.key); setActivePost(null);
+              try { if (n.key === "zeitstrahl") window.history.replaceState(null, "", "#zeitstrahl"); else if (window.location.hash.startsWith("#zeitstrahl")) window.history.replaceState(null, "", window.location.pathname); } catch { /* egal */ }
+            }}
           >
             {n.label}
           </button>
@@ -609,6 +620,9 @@ export default function App() {
             </div>
           </>
         )}
+
+        {/* ── ZEITSTRAHL ─────────────────────────────────────── */}
+        {view === "zeitstrahl" && <Zeitstrahl onOpen={openPost} />}
 
         {/* ── ABOUT ──────────────────────────────────────────── */}
         {view === "about" && (
