@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { categories, posts } from "./data.js";
 import Zeitstrahl from "./Zeitstrahl.jsx";
 import { ErbfolgeBlock } from "./Erbfolge.jsx";
+import { HeuteBox, ParteKnopf } from "./Gedenken.jsx";
 
 const STYLES = `
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -477,6 +478,7 @@ export default function App() {
             <div className="hero-date">† Archiv der Stille</div>
             <div className="section-title">Zuletzt verstorben</div>
             <div className="section-sub">Nachrufe auf Dinge, die ohne Abschied gingen</div>
+            <div style={{ margin: "18px 0 26px" }}><HeuteBox onOpen={openPost} /></div>
 
             {/* Filter */}
             <div className="filter-bar">
@@ -559,6 +561,7 @@ export default function App() {
                     <p key={i} className="post-body-para">{para}</p>
                   ))}
                 </div>
+                <div style={{ marginTop: 24, textAlign: "center" }}><ParteKnopf id={activePost.id} /></div>
                 <ErbfolgeBlock postId={activePost.id} onOpen={openPost}
                   onErbfolge={(id) => { setErbStart(id); setActivePost(null); setView("zeitstrahl"); try { window.history.replaceState(null, "", `#zeitstrahl&domino=${id}`); } catch { /* egal */ } }} />
                 <div className="post-closing">

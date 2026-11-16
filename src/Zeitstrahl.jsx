@@ -3,6 +3,7 @@ import { categories, posts } from "./data.js";
 import { lebensdaten, STATUS_TEXT, BELEG_TEXT } from "./lebensdaten.js";
 import Erbfolge from "./Erbfolge.jsx";
 import Zukunft from "./Zukunft.jsx";
+import { Auferstandene, Kalender, ParteKnopf } from "./Gedenken.jsx";
 import { kanten } from "./abhaengigkeiten.js";
 
 const JETZT = new Date().getFullYear();
@@ -60,7 +61,7 @@ const CSS = `
   .zs-hinweis { max-width: 760px; margin: 22px auto 0; font-family: 'IM Fell English', serif; font-size: 12px; color: #7a6a4a; line-height: 1.6; text-align: center; }
 
   .zs-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 0; margin: 0 auto 26px; }
-  .zs-tabs button { font-family: 'IM Fell English', serif; font-size: 15px; letter-spacing: 1px; padding: 8px 18px; background: #e8dcc8; border: 1px solid #c8b89a; color: #3a2a18; cursor: pointer; }
+  .zs-tabs button { font-family: 'IM Fell English', serif; font-size: 15px; letter-spacing: 1px; padding: 8px 16px; margin: 0 0 -1px -1px; background: #e8dcc8; border: 1px solid #c8b89a; color: #3a2a18; cursor: pointer; }
   .zs-tabs button.aktiv { background: #2a1f14; color: #f0e8d8; border-color: #c8a97e; }
   .zs-wrap { --zs-label: 190px; }
   @media (max-width: 640px) {
@@ -93,7 +94,12 @@ export default function Zeitstrahl({ onOpen, dominoStart }) {
   const startDomino = dominoStart || leseDomino();
   const [ansicht, setAnsicht] = useState(() => {
     if (startDomino) return "erbfolge";
-    try { if (window.location.hash.includes("zukunft")) return "zukunft"; } catch { /* egal */ }
+    try {
+      const h = window.location.hash;
+      if (h.includes("zukunft")) return "zukunft";
+      if (h.includes("auferstanden")) return "auferstanden";
+      if (h.includes("kalender")) return "kalender";
+    } catch { /* egal */ }
     return "balken";
   });
   const [domino, setDomino] = useState(startDomino);
@@ -138,7 +144,7 @@ export default function Zeitstrahl({ onOpen, dominoStart }) {
 
   const wechsle = (a) => {
     setAnsicht(a);
-    try { window.history.replaceState(null, "", a === "erbfolge" ? "#zeitstrahl&domino=" + (domino || "auto") : a === "zukunft" ? "#zeitstrahl&zukunft" : "#zeitstrahl"); } catch { /* egal */ }
+    try { window.history.replaceState(null, "", a === "erbfolge" ? "#zeitstrahl&domino=" + (domino || "auto") : a === "zukunft" ? "#zeitstrahl&zukunft" : a === "auferstanden" ? "#zeitstrahl&auferstanden" : a === "kalender" ? "#zeitstrahl&kalender" : "#zeitstrahl"); } catch { /* egal */ }
   };
   const zeigeDomino = (id) => {
     let w = id; const seen = new Set();
@@ -169,8 +175,22 @@ export default function Zeitstrahl({ onOpen, dominoStart }) {
         <button className={ansicht === "balken" ? "aktiv" : ""} onClick={() => wechsle("balken")}>Lebensbalken</button>
         <button className={ansicht === "erbfolge" ? "aktiv" : ""} onClick={() => wechsle("erbfolge")}>Erbfolge & Domino</button>
         <button className={ansicht === "zukunft" ? "aktiv" : ""} onClick={() => wechsle("zukunft")}>Zukunft</button>
+        <button className={ansicht === "auferstanden" ? "aktiv" : ""} onClick={() => wechsle("auferstanden")}>Auferstanden</button>
+        <button className={ansicht === "kalender" ? "aktiv" : ""} onClick={() => wechsle("kalender")}>Gedenktage</button>
       </div>
-      {ansicht === "zukunft" ? (
+      {ansicht === "auferstanden" ? (
+        <>
+          <div className="section-title">Die Auferstandenen</div>
+          <div className="section-sub">Totgesagt, begraben – und wieder da</div>
+          <Auferstandene onOpen={onOpen} />
+        </>
+      ) : ansicht === "kalender" ? (
+        <>
+          <div className="section-title">Die Gedenktage</div>
+          <div className="section-sub">Heute vor so und so vielen Jahren</div>
+          <Kalender onOpen={onOpen} />
+        </>
+      ) : ansicht === "zukunft" ? (
         <>
           <div className="section-title">Die Palliativstation</div>
           <div className="section-sub">Wer als Nächstes geht – und warum</div>
@@ -296,6 +316,7 @@ export default function Zeitstrahl({ onOpen, dominoStart }) {
                   <div className="zs-schein-notiz">{d.notiz}</div>
                   <div className="zs-schein-fuss">
                     <button className="zs-lesen" onClick={() => onOpen(post)}>Nachruf lesen →</button>
+                    <ParteKnopf id={post.id} />
                     {kanten.some(([v, z]) => v === post.id || z === post.id) && <button className="zs-lesen" style={{ background: "none", color: "#c8a97e", border: "1px solid #c8a97e" }} onClick={() => zeigeDomino(post.id)}>Erbfolge als Domino →</button>}
                     <span>Jahre: {BELEG_TEXT[d.beleg]}</span>
                     {d.quelle && <a href={d.quelle.url} target="_blank" rel="noopener noreferrer">Quelle: {d.quelle.titel}</a>}
