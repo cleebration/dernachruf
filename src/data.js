@@ -892,4 +892,54 @@ Es war eine Zweiteilung der Arbeit, die heute wie aus einer anderen Welt wirkt. 
 
 Word Processing, E-Mail, die Computer im Büro – sie haben diese Arbeitsteilung aufgelöst. Heute schreibt der Chef selbst. Meistens flüchtiger, manchmal fehlerhafter. Die Schreibkraft, die ein schlechtes Diktat in einen guten Brief verwandelte – die fehlt manchem Büro bis heute.`,
   },
+  {
+    "id": "pferd",
+    "category": "verkehr",
+    "categoryLabel": "Verkehr",
+    "headline": "Es zog die Welt – und wurde ausgespannt",
+    "subline": "Nachruf auf das Pferd als Zugtier – den Motor, der Hafer fraß.",
+    "archiveDesc": "Fuhrwerk, Pflug und Stellwagen – bis der Motor kam",
+    "readTime": "3 Min.",
+    "body": "Es stand vor dem Bierwagen, vor dem Pflug, vor dem Stellwagen ins Nachbardorf. Es kannte den Weg zur Brauerei besser als der Kutscher und blieb vor dem Wirtshaus von selbst stehen. Es roch nach Schweiß, Leder und Heu, und wenn es fror, dampfte es.\n\nUm das Pferd herum wuchs eine ganze Welt: der Hufschmied, der Sattler, der Kutscher, der Heuhändler, der Bub, der die Pferdeäpfel von der Straße kehrte. Jedes Dorf hatte seine Tränke, jedes Gasthaus seinen Stall. Eine Stadt ohne Pferde war so undenkbar wie eine Stadt ohne Brot.\n\nDann kam der Traktor auf den Acker und der Lastwagen auf die Straße. Erst langsam, dann auf einmal. Das Pferd wurde nicht abgeschafft, es wurde ausgespannt – und mit ihm eine Welt, die keiner aufgeschrieben hat. Heute zieht es noch den Fiaker durch die Wiener Innenstadt und den Bierwagen beim Festumzug. Es ist ein Gast geworden in einer Welt, die es einmal getragen hat."
+  },
+  {
+    "id": "hufschmied",
+    "category": "berufe",
+    "categoryLabel": "Berufe",
+    "headline": "Funken, Horn und ein Geruch, den keiner vergisst",
+    "subline": "Nachruf auf die Dorfschmiede – den Ort, an dem das Eisen zum Pferd kam.",
+    "archiveDesc": "Glühendes Eisen, zischendes Horn, ein Pferd, das stillhielt",
+    "readTime": "3 Min.",
+    "body": "Die Schmiede lag am Dorfrand, die Tür stand immer offen. Drinnen glühte die Esse, draußen warteten die Pferde. Der Schmied hob den Huf zwischen seine Knie, als wäre es das Natürlichste der Welt, und das Pferd ließ ihn. Es war Vertrauen, beschlagen mit Eisen.\n\nDas heiße Eisen wurde aufgepasst, das Horn zischte, und es stieg ein Rauch auf, der nach verbranntem Haar roch – ein Geruch, den kein Kind vergaß, das auf dem Heimweg stehen geblieben war. Dann die Nägel, schräg nach außen, umgebogen, abgezwickt. Ein paar Striche mit der Raspel. Fertig. Das nächste.\n\nAls die Pferde gingen, ging die Dorfschmiede mit. Manche Schmiede wurden Schlosser, manche reparierten fortan Traktoren. Die Esse erlosch. Den Hufschmied gibt es noch, für Reitpferde und Turniere – aber die offene Tür am Dorfrand, vor der man stehen blieb, gibt es nicht mehr."
+  },
+  {
+    "id": "kutscher",
+    "category": "verkehr",
+    "categoryLabel": "Verkehr",
+    "headline": "Hü und Hott und ein Platz ganz oben",
+    "subline": "Nachruf auf den Kutscher – den Fahrer, der noch mit seinem Motor sprach.",
+    "archiveDesc": "Zügel, Peitsche, Hü und Hott – der Fahrer vor dem Fahrer",
+    "readTime": "3 Min.",
+    "body": "Er saß oben, höher als alle anderen, und sah die Stadt über die Pferderücken hinweg. Er hielt die Zügel in der einen Hand und die Peitsche in der anderen, die er öfter knallen ließ als benutzte. Er sprach mit seinen Pferden – Hü, Hott, Brrr – und sie verstanden ihn besser als mancher Fahrgast.\n\nEr fuhr Lohnkutschen und Lastfuhrwerke, Hochzeiten und Begräbnisse. Er wusste, welches Pferd bergauf zog und welches nur so tat. Er wartete vor Bahnhöfen und Theatern, im Winter mit einer Decke über den Knien und einer zweiten über dem Pferd.\n\nDann kam das Automobil, und es brauchte weder Hafer noch Decke. Aus dem Kutscher wurde der Chauffeur, aus der Lohnkutsche das Taxi. Nur in Wien hat er überlebt: als Fiaker, mit Melone und Geschichten für Touristen. Er sitzt immer noch oben. Aber er fährt nur noch im Kreis."
+  },
+  {
+    "id": "sattler",
+    "category": "berufe",
+    "categoryLabel": "Berufe",
+    "headline": "Er nähte, was das Pferd zog",
+    "subline": "Nachruf auf den Geschirrsattler – den Handwerker zwischen Pferd und Wagen.",
+    "archiveDesc": "Kummet, Zaumzeug, Lederriemen – Handarbeit fürs Zugpferd",
+    "readTime": "3 Min.",
+    "body": "In seiner Werkstatt roch es nach Leder, Wachs und Pferd, obwohl nie ein Pferd hereinkam. An den Wänden hingen Kummete, Zaumzeug, Riemen in allen Längen. Er nähte mit zwei Nadeln zugleich, den Faden gewachst, Stich um Stich, und was er nähte, hielt ein Pferdeleben lang.\n\nDas Kummet war sein Meisterstück: der gepolsterte Kragen, der die Kraft des Pferdes auf den Wagen brachte, ohne es wund zu scheuern. Jedes Pferd hatte seine Maße. Ein schlecht sitzendes Kummet erkannte der Bauer am Gang, der Sattler am Fell.\n\nMit dem Zugpferd verschwand das Geschirr, und mit dem Geschirr die Kundschaft. Manche Sattler wurden Autosattler und polsterten fortan Sitze statt Kragen. Andere nähten Taschen, Gürtel und Reitsättel. Das Handwerk lebt – aber das Kummet hängt heute als Spiegelrahmen im Landgasthof."
+  },
+  {
+    "id": "pferdeaepfel",
+    "category": "verkehr",
+    "categoryLabel": "Verkehr",
+    "headline": "Er kehrte, was die Pferde hinterließen",
+    "subline": "Nachruf auf den Pferdeäpfel-Sammler – den Mann mit Schaufel und Kübel.",
+    "archiveDesc": "Schaufel, Kübel, Straßenmist – und ein paar Münzen vom Gärtner",
+    "readTime": "2 Min.",
+    "body": "Wo Pferde gingen, blieb etwas liegen. Und wo etwas liegen blieb, kam einer mit Schaufel und Kübel. Manchmal war es der Straßenkehrer, manchmal ein alter Mann, manchmal ein Bub, der wusste, dass der Gärtner ums Eck ein paar Münzen dafür gab.\n\nPferdemist war kein Abfall, er war ein Rohstoff. Er wärmte die Frühbeete und düngte die Gemüsegärten am Stadtrand. Wer schnell war, war vor den anderen da. Der Geruch gehörte zur Stadt wie das Klappern der Hufe auf dem Kopfsteinpflaster.\n\nAls die Pferde aus den Straßen verschwanden, verschwand auch der Mist, und mit ihm der Mann, der ihn aufhob. Was die Autos hinterlassen, kann man in keinen Kübel schaufeln. Und kein Gärtner zahlt dafür."
+  },
 ];

@@ -3,7 +3,6 @@
 //
 // knoten: zusätzliche Dinge, die (noch) keinen eigenen Nachruf haben
 //   typ "neu"  = Neuankömmling, der Altes verdrängte (lebt meist noch) – jahr = Durchbruch im Alltag
-//   typ "alt"  = selbst verstorben, aber noch ohne Nachruf – gestorben = Todesjahr
 // kanten: [von, zu, art]
 //   art "verdraengt" = von (neu) hat zu verdrängt
 //   art "rissmit"    = mit dem Tod von "von" starb auch "zu"
@@ -44,12 +43,6 @@ export const knoten = {
   rucksack: { typ: "neu", name: "Schulrucksack", jahr: 1980 },
   schulkarte: { typ: "neu", name: "Chipkarte & App", jahr: 2010 },
 
-  // ── Verstorbene ohne eigenen Nachruf (Kandidaten für neue Nachrufe) ──
-  pferd: { typ: "alt", name: "Pferd als Zugtier", gestorben: 1960 },
-  hufschmied: { typ: "alt", name: "Hufschmied", gestorben: 1970 },
-  kutscher: { typ: "alt", name: "Kutscher", gestorben: 1940 },
-  sattler: { typ: "alt", name: "Sattler für Geschirre", gestorben: 1970 },
-  pferdeaepfel: { typ: "alt", name: "Pferdeäpfel-Sammler", gestorben: 1940 },
 };
 
 export const kanten = [

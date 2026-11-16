@@ -111,6 +111,12 @@ export const lebensdaten = {
   "rohrpost": { name: "Rohrpost", geboren: 1875, bluete: [1900, 1940], siechtumAb: 1945, gestorben: 1956, status: "tot", region: "AT", beleg: "belegt", quelle: Q.rohrpost, notiz: "Wiens Rohrpostnetz lief von 1875 bis 1956 – in Spitälern lebt sie weiter." },
   "waehlscheibe": { name: "Wählscheibe", geboren: 1910, bluete: [1930, 1980], siechtumAb: 1980, gestorben: 2000, status: "tot", region: "DACH", beleg: "geschaetzt", notiz: "Das Tastentelefon war schneller als die Geduld." },
   "diktiergeraet": { name: "Diktiergerät", geboren: 1950, bluete: [1955, 1990], siechtumAb: 1995, gestorben: null, status: "sterbend", region: "DACH", beleg: "geschaetzt", notiz: "Spracherkennung tippt heute selbst." },
+  // ─── PFERDEWELT (Nachrufe seit 2026-11-16) ───────────────────
+  "pferd": { name: "Pferd als Zugtier", geboren: 1800, bluete: [1850, 1920], siechtumAb: 1920, gestorben: 1965, status: "tot", region: "AT", beleg: "geschaetzt", notiz: "Traktor und Lastwagen spannten es aus – als Fiaker lebt es in Wien weiter." },
+  "hufschmied": { name: "Dorfschmiede", geboren: 1800, bluete: [1850, 1930], siechtumAb: 1930, gestorben: 1970, status: "tot", region: "AT", beleg: "geschaetzt", notiz: "Den Hufschmied gibt es für Reitpferde noch – die Schmiede am Dorfrand nicht." },
+  "kutscher": { name: "Kutscher", geboren: 1800, bluete: [1850, 1910], siechtumAb: 1910, gestorben: 1950, status: "tot", region: "AT", beleg: "geschaetzt", notiz: "Als Verkehrsmittel tot, als Fiaker in Wien quicklebendig." },
+  "sattler": { name: "Geschirrsattler", geboren: 1800, bluete: [1850, 1930], siechtumAb: 1930, gestorben: 1970, status: "tot", region: "AT", beleg: "geschaetzt", notiz: "Das Handwerk lebt als Auto- und Reitsattler – das Geschirr fürs Zugpferd braucht keiner mehr." },
+  "pferdeaepfel": { name: "Pferdeäpfel-Sammler", geboren: 1850, bluete: [1870, 1914], siechtumAb: 1920, gestorben: 1940, status: "tot", region: "DACH", beleg: "geschaetzt", notiz: "Ohne Pferde kein Mist – und kein Gärtner, der dafür zahlt." },
 };
 
 export const STATUS_TEXT = {
