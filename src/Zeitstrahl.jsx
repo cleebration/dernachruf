@@ -144,13 +144,13 @@ export default function Zeitstrahl({ onOpen, dominoStart }) {
 
   const wechsle = (a) => {
     setAnsicht(a);
-    try { window.history.replaceState(null, "", a === "erbfolge" ? "#zeitstrahl&domino=" + (domino || "auto") : a === "zukunft" ? "#zeitstrahl&zukunft" : a === "auferstanden" ? "#zeitstrahl&auferstanden" : a === "kalender" ? "#zeitstrahl&kalender" : "#zeitstrahl"); } catch { /* egal */ }
+    try { window.history.replaceState(null, "", a === "erbfolge" ? "/#zeitstrahl&domino=" + (domino || "auto") : a === "zukunft" ? "/#zeitstrahl&zukunft" : a === "auferstanden" ? "/#zeitstrahl&auferstanden" : a === "kalender" ? "/#zeitstrahl&kalender" : "/#zeitstrahl"); } catch { /* egal */ }
   };
   const zeigeDomino = (id) => {
     let w = id; const seen = new Set();
     while (!seen.has(w)) { seen.add(w); const e = kanten.find(([, z]) => z === w); if (!e) break; w = e[0]; }
     setDomino(w); setAnsicht("erbfolge"); window.scrollTo(0, 0);
-    try { window.history.replaceState(null, "", "#zeitstrahl&domino=" + w); } catch { /* egal */ }
+    try { window.history.replaceState(null, "", "/#zeitstrahl&domino=" + w); } catch { /* egal */ }
   };
 
   const teilen = () => {
@@ -164,7 +164,7 @@ export default function Zeitstrahl({ onOpen, dominoStart }) {
     setGeburt(v);
     try {
       const ok = /^\d{4}$/.test(v);
-      window.history.replaceState(null, "", ok ? `#zeitstrahl&geboren=${v}` : "#zeitstrahl");
+      window.history.replaceState(null, "", ok ? `/#zeitstrahl&geboren=${v}` : "/#zeitstrahl");
     } catch { /* egal */ }
   };
 

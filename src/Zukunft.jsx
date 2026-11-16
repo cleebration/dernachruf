@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ausloeser, kranke, rechne, NIE } from "./zukunft.js";
 
 const JETZT = new Date().getFullYear();
@@ -69,6 +69,23 @@ export default function Zukunft() {
   const [jahre, setJahre] = useState(leseSzenario);
   const [kopiert, setKopiert] = useState(false);
   const { tod, welcher } = useMemo(() => rechne(jahre), [jahre]);
+  const [schwarm, setSchwarm] = useState(null);
+  const [orakel, setOrakel] = useState(() => { try { return localStorage.getItem("dernachruf-orakel") || ""; } catch { return ""; } });
+  useEffect(() => {
+    fetch("/api/orakel").then((r) => (r.ok ? r.json() : null)).then(setSchwarm).catch(() => setSchwarm(null));
+  }, []);
+  const befragen = async () => {
+    setOrakel("…");
+    try {
+      const r = await fetch("/api/orakel", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ jahre }) });
+      if (!r.ok) throw new Error();
+      const heute = new Date().toISOString().slice(0, 10);
+      try { localStorage.setItem("dernachruf-orakel", heute); } catch { /* egal */ }
+      setOrakel(heute);
+      fetch("/api/orakel").then((x) => (x.ok ? x.json() : null)).then(setSchwarm).catch(() => {});
+    } catch { setOrakel("fehler"); }
+  };
+  const schonHeute = orakel && orakel === new Date().toISOString().slice(0, 10);
 
   const liste = useMemo(() => [...kranke].sort((a, b) => tod[a.id] - tod[b.id] || a.name.localeCompare(b.name)), [tod]);
   const nameVon = (id) => ausloeser.find((a) => a.id === id)?.name || kranke.find((k) => k.id === id)?.name || id;
@@ -76,11 +93,11 @@ export default function Zukunft() {
   const setze = (id, wert) => {
     const neu = { ...jahre, [id]: wert };
     setJahre(neu);
-    try { window.history.replaceState(null, "", `#zeitstrahl&zukunft=${kodiere(neu)}`); } catch { /* egal */ }
+    try { window.history.replaceState(null, "", `/#zeitstrahl&zukunft=${kodiere(neu)}`); } catch { /* egal */ }
   };
   const zuruecksetzen = () => {
     setJahre(standard());
-    try { window.history.replaceState(null, "", "#zeitstrahl&zukunft"); } catch { /* egal */ }
+    try { window.history.replaceState(null, "", "/#zeitstrahl&zukunft"); } catch { /* egal */ }
   };
   const teilen = () => {
     try {
@@ -107,6 +124,9 @@ export default function Zukunft() {
           <div>
             <button className="zk-knopf" onClick={zuruecksetzen}>Zurücksetzen</button>
             <button className="zk-knopf" onClick={teilen}>{kopiert ? "Link kopiert ✓" : "Mein Szenario teilen"}</button>
+            {schwarm && <button className="zk-knopf" disabled={schonHeute || orakel === "…"} onClick={befragen}>
+              {orakel === "…" ? "…" : schonHeute ? "Ihre Schätzung zählt ✓" : orakel === "fehler" ? "Nochmal versuchen" : "Dem Orakel meine Schätzung geben"}
+            </button>}
           </div>
         </div>
         {ausloeser.map((a) => (
@@ -116,6 +136,12 @@ export default function Zukunft() {
               <span className="zk-ein-jahr">{jahre[a.id] >= NIE ? "nie" : jahre[a.id]}</span>
             </div>
             <div className="zk-ein-frage">{a.frage}</div>
+            {schwarm && schwarm[a.id] && schwarm[a.id].stimmen > 0 && (
+              <div className="zk-ein-frage" style={{ color: "#c8a97e", fontStyle: "normal" }}>
+                Das Orakel ({schwarm[a.id].stimmen} {schwarm[a.id].stimmen === 1 ? "Stimme" : "Stimmen"}): {schwarm[a.id].median >= NIE ? "nie" : schwarm[a.id].median}
+                {schwarm[a.id].nie > 0 && schwarm[a.id].median < NIE ? ` · ${schwarm[a.id].nie}× „nie"` : ""}
+              </div>
+            )}
             <input type="range" min={a.min} max={a.max} step={1} value={jahre[a.id]}
               aria-label={a.name} onChange={(e) => setze(a.id, +e.target.value)} />
             <details>

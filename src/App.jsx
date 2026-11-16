@@ -3,6 +3,7 @@ import { categories, posts } from "./data.js";
 import Zeitstrahl from "./Zeitstrahl.jsx";
 import { ErbfolgeBlock } from "./Erbfolge.jsx";
 import { HeuteBox, ParteKnopf } from "./Gedenken.jsx";
+import Kondolenzbuch from "./Kondolenz.jsx";
 
 const STYLES = `
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -405,7 +406,22 @@ export default function App() {
     if (window.location.hash.startsWith("#zeitstrahl")) return "zeitstrahl";
     return "posts";
   });
-  const [activePost, setActivePost] = useState(null);
+  const postAusPfad = () => {
+    try {
+      const m = window.location.pathname.match(/^\/blog\/([^/]+)\/?$/);
+      return m ? posts.find((p) => p.id === decodeURIComponent(m[1])) || null : null;
+    } catch { return null; }
+  };
+  const [activePost, setActivePost] = useState(postAusPfad);
+  useEffect(() => {
+    const zurueck = () => { setActivePost(postAusPfad()); if (window.location.pathname.startsWith("/blog/")) setView("posts"); };
+    window.addEventListener("popstate", zurueck);
+    return () => window.removeEventListener("popstate", zurueck);
+  }, []);
+  const schliessePost = () => {
+    setActivePost(null);
+    try { if (window.location.pathname.startsWith("/blog/")) window.history.pushState(null, "", "/"); } catch { /* egal */ }
+  };
   const [erbStart, setErbStart] = useState(null);
   const [expandedCat, setExpandedCat] = useState(null);
   const [filterCat, setFilterCat] = useState("alle");
@@ -414,6 +430,9 @@ export default function App() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [activePost, view]);
+  useEffect(() => {
+    document.title = activePost ? `${activePost.headline} – DerNachruf` : "DerNachruf – Ein Archiv der verschwundenen Dinge";
+  }, [activePost]);
 
   const filteredPosts = posts.filter((p) => {
     const matchesCat = filterCat === "alle" || p.category === filterCat;
@@ -428,7 +447,7 @@ export default function App() {
   });
 
   const openPost = (post) => {
-    try { if (window.location.hash.startsWith("#zeitstrahl")) window.history.replaceState(null, "", window.location.pathname); } catch { /* egal */ }
+    try { if (window.location.pathname !== `/blog/${post.id}`) window.history.pushState(null, "", `/blog/${post.id}`); } catch { /* egal */ }
     setActivePost(post);
     setView("posts");
   };
@@ -461,8 +480,8 @@ export default function App() {
             key={n.key}
             className={`nav-btn ${view === n.key && !activePost ? "active" : view === n.key && activePost && n.key === "posts" ? "active" : ""}`}
             onClick={() => {
-              setView(n.key); setActivePost(null); setErbStart(null);
-              try { if (n.key === "zeitstrahl") window.history.replaceState(null, "", "#zeitstrahl"); else if (window.location.hash.startsWith("#zeitstrahl")) window.history.replaceState(null, "", window.location.pathname); } catch { /* egal */ }
+              setView(n.key); schliessePost(); setErbStart(null);
+              try { if (n.key === "zeitstrahl") window.history.replaceState(null, "", "/#zeitstrahl"); else if (window.location.hash.startsWith("#zeitstrahl")) window.history.replaceState(null, "", window.location.pathname); } catch { /* egal */ }
             }}
           >
             {n.label}
@@ -545,7 +564,7 @@ export default function App() {
           const cat = categories.find((c) => c.id === activePost.category);
           return (
             <div className="post-full-wrap">
-              <button className="back-btn" onClick={() => setActivePost(null)}>← Zurück</button>
+              <button className="back-btn" onClick={schliessePost}>← Zurück</button>
               <div className="post-full">
                 <div className="post-category-tag" style={{ padding: "0 0 10px", color: cat?.color ? cat.color + "99" : undefined }}>
                   † {activePost.categoryLabel}
@@ -563,7 +582,8 @@ export default function App() {
                 </div>
                 <div style={{ marginTop: 24, textAlign: "center" }}><ParteKnopf id={activePost.id} /></div>
                 <ErbfolgeBlock postId={activePost.id} onOpen={openPost}
-                  onErbfolge={(id) => { setErbStart(id); setActivePost(null); setView("zeitstrahl"); try { window.history.replaceState(null, "", `#zeitstrahl&domino=${id}`); } catch { /* egal */ } }} />
+                  onErbfolge={(id) => { setErbStart(id); setActivePost(null); setView("zeitstrahl"); try { window.history.pushState(null, "", `/#zeitstrahl&domino=${id}`); } catch { /* egal */ } }} />
+                <Kondolenzbuch postId={activePost.id} />
                 <div className="post-closing">
                   Wir erinnern. Wir trauern. Wir vergessen nicht.<br />
                   <span style={{ fontSize: "12px", letterSpacing: "2px" }}>— DerNachruf</span>

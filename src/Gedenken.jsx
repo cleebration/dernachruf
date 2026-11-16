@@ -46,9 +46,10 @@ const CSS = `
   .gd-parte[disabled] { opacity: .6; cursor: wait; }
 `;
 
-function Name({ id, onOpen }) {
+function Name({ id, name, onOpen }) {
   const p = postVon[id];
-  return p ? <a onClick={() => onOpen(p)}>{nameVon(id)}</a> : <>{nameVon(id)}</>;
+  const n = name || nameVon(id);
+  return p ? <a onClick={() => onOpen(p)}>{n}</a> : <>{n}</>;
 }
 
 export function ParteKnopf({ id, style }) {
@@ -79,11 +80,11 @@ export function HeuteBox({ onOpen }) {
       <div className="gd-heute-kopf">{heute.length ? "Heute vor … Jahren" : "Der nächste Gedenktag"}</div>
       {heute.length ? heute.map((g) => (
         <div key={g.id + g.jahr} className="gd-heute-text">
-          {ZEICHEN[g.art]} Heute vor {jahrHeute - g.jahr} Jahren: <Name id={g.id} onOpen={onOpen} /> – {g.text}
+          {ZEICHEN[g.art]} Heute vor {jahrHeute - g.jahr} Jahren: <Name id={g.id} name={g.name} onOpen={onOpen} /> – {g.text}
         </div>
       )) : naechster && (
         <div className="gd-heute-text">
-          {ZEICHEN[naechster.art]} Am {naechsterDatum.getDate()}. {MONATE[naechsterDatum.getMonth()]}: {artText(naechster.art)} von <Name id={naechster.id} onOpen={onOpen} /> – vor {naechsterDatum.getFullYear() - naechster.jahr} Jahren. {naechster.text}
+          {ZEICHEN[naechster.art]} Am {naechsterDatum.getDate()}. {MONATE[naechsterDatum.getMonth()]}: {artText(naechster.art)} von <Name id={naechster.id} name={naechster.name} onOpen={onOpen} /> – vor {naechsterDatum.getFullYear() - naechster.jahr} Jahren. {naechster.text}
         </div>
       )}
     </div>
@@ -107,7 +108,7 @@ export function Kalender({ onOpen }) {
             {sortiert.filter((g) => g.monat === mo).map((g) => (
               <div key={g.id + g.jahr + g.art} className={`gd-eintrag ${g.tag === t && g.monat === m ? "heute" : ""}`}>
                 <div className="gd-tag">{g.tag}. {MONATE[g.monat - 1].slice(0, 3)}.<small>{g.jahr}</small></div>
-                <div className="gd-was"><b>{ZEICHEN[g.art]} {artText(g.art)}</b><Name id={g.id} onOpen={onOpen} /> – {g.text}{" "}
+                <div className="gd-was"><b>{ZEICHEN[g.art]} {artText(g.art)}</b><Name id={g.id} name={g.name} onOpen={onOpen} /> – {g.text}{" "}
                   {g.quelle && <a href={g.quelle} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: "#8a7a5a" }}>Quelle</a>}
                 </div>
               </div>

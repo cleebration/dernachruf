@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/feed.xml",
+      "destination": "/api/feed"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/blog/:slug/index.html"
+    }
+  ]
+}
