@@ -11,7 +11,7 @@ import { lebensdaten } from "../src/lebensdaten.js";
 // RSS by Zapier meldet nur Einträge, die nach dem Einschalten neu erscheinen.
 export const START_DATE = "2026-11-17";
 export const INTERVAL_DAYS = 1;
-const SITE = "https://dernachruf.com";
+const SITE = "https://www.dernachruf.com";
 const TAG_MS = 86400000;
 
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");

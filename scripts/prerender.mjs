@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 import { posts } from "../src/data.js";
 
-const SITE = "https://dernachruf.com";
+const SITE = "https://www.dernachruf.com";
 const DIST = path.resolve("dist");
 const vorlage = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
